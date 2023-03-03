@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Akan2096/demo_githooks#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "husky": "^8.0.0"
   }
 }
