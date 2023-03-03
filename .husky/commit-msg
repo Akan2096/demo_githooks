@@ -1,38 +1,38 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx --no-install commitlint --edit $1
+#npx --no-install commitlint --edit $1
 
-#message="$(cat $1)"
-#requiredPattern="^(add|cut|fix|bump|make|start|stop|refactor|reformat|optimise|document|merge) .*$"
-#if ! [[ $message =~ $requiredPattern ]];
-#then
-#  echo "-"
-#  echo "-"
-#  echo "-"
-#  echo "Wrong commit message! You should follow conventional commit message."
-#  echo "The commit message must have this format:"
-#  echo "<type>/ETOOL-<jira-ticket-id>: <description>"
-#  echo "or"
-#  echo "<type>: <description>"
-#  echo "Allowed types:"
-#  echo "API relevant changes
-#        feat: Commits, that adds a new feature
-#        fix:  Commits, that fixes a bug
-#        refactor: Commits, that rewrite/restructure your code, however does not change any behaviour
-#        perf: Commits are special refactor commits, that improve performance
-#        style: Commits, that do not affect the meaning (white-space, formatting, missing semi-colons, etc)
-#        test: Commits, that add missing tests or correcting existing tests
-#        docs: Commits, that affect documentation only
-#        build: Commits, that affect build components like build tool, ci pipeline, dependencies, project version, ...
-#        ops: Commits, that affect operational components like infrastructure, deployment, backup, recovery, ...
-#        chore: Miscellaneous commits e.g. modifying .gitignore"
-#  echo "Example: feat: add a new feature"
-#  echo "-"
-#  echo "Your commit message was:"
-#  echo $message
-#  echo "-"
-#  echo "For more information, check script in .husky/commit-msg"
-#  echo "-"
-#  exit 1
-#fi
+message="$(cat $1)"
+requiredPattern="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\: (.*)$"
+if ! [[ $message =~ $requiredPattern ]];
+then
+  echo "-"
+  echo "-"
+  echo "-"
+  echo "Wrong commit message! You should follow conventional commit message."
+  echo "The commit message must have this format:"
+  echo "<type>/ETOOL-<jira-ticket-id>: <description>"
+  echo "or"
+  echo "<type>: <description>"
+  echo "Allowed types:"
+  echo "API relevant changes
+        feat: Commits, that adds a new feature
+        fix:  Commits, that fixes a bug
+        refactor: Commits, that rewrite/restructure your code, however does not change any behaviour
+        perf: Commits are special refactor commits, that improve performance
+        style: Commits, that do not affect the meaning (white-space, formatting, missing semi-colons, etc)
+        test: Commits, that add missing tests or correcting existing tests
+        docs: Commits, that affect documentation only
+        build: Commits, that affect build components like build tool, ci pipeline, dependencies, project version, ...
+        ops: Commits, that affect operational components like infrastructure, deployment, backup, recovery, ...
+        chore: Miscellaneous commits e.g. modifying .gitignore"
+  echo "Example: feat: add a new feature"
+  echo "-"
+  echo "Your commit message was:"
+  echo $message
+  echo "-"
+  echo "For more information, check script in .husky/commit-msg"
+  echo "-"
+  exit 1
+fi
