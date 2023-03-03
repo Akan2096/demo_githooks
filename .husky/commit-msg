@@ -10,8 +10,6 @@ then
   echo "-"
   echo "Wrong commit message! You should follow conventional commit message."
   echo "The commit message must have this format:"
-  echo "<type>/ETOOL-<jira-ticket-id>: <description>"
-  echo "or"
   echo "<type>: <description>"
   echo "Allowed types:"
   echo "API relevant changes
