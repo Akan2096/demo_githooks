@@ -8,8 +8,6 @@ requiredPattern="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)
 if ! [[ $message =~ $requiredPattern ]];
 then
   echo "-"
-  echo "-"
-  echo "-"
   echo "Wrong commit message! You should follow conventional commit message."
   echo "The commit message must have this format:"
   echo "<type>/ETOOL-<jira-ticket-id>: <description>"
