@@ -1,18 +1,31 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+  #!/bin/sh
+#
+# An example hook script to check the commit log message.
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to "commit-msg".
 
-#npx --no-install commitlint --edit $1
+# Uncomment the below to add a Signed-off-by line to the message.
+# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+# hook is more suited to it.
+#
+# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
 
-message="$(cat $1)"
+commit_msg=$(cat "${1:?Missing commit message file}")
+echo -e "your message is : $commit_msg"
 requiredPattern="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\: (.*)$"
-if ! [[ $message =~ $requiredPattern ]];
+if  ! [[ $commit_msg =~ $requiredPattern ]];
 then
   echo "-"
   echo "Wrong commit message! You should follow conventional commit message."
   echo "The commit message must have this format:"
   echo "<type>: <description>"
   echo "Allowed types:"
-  echo "API relevant changes
+  echo "
         feat: Commits, that adds a new feature
         fix:  Commits, that fixes a bug
         refactor: Commits, that rewrite/restructure your code, however does not change any behaviour
@@ -23,12 +36,10 @@ then
         build: Commits, that affect build components like build tool, ci pipeline, dependencies, project version, ...
         ops: Commits, that affect operational components like infrastructure, deployment, backup, recovery, ...
         chore: Miscellaneous commits e.g. modifying .gitignore"
-  echo "Example: feat: add a new feature"
+  echo "Example: test: add unit test cases"
   echo "-"
   echo "Your commit message was:"
-  echo $message
-  echo "-"
-  echo "For more information, check script in .husky/commit-msg"
+  echo $commit_msg
   echo "-"
   exit 1
 fi

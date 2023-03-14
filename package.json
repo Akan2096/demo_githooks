@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "prepare": "husky install"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Akan2096/demo_githooks.git"
@@ -16,9 +13,8 @@
     "url": "https://github.com/Akan2096/demo_githooks/issues"
   },
   "homepage": "https://github.com/Akan2096/demo_githooks#readme",
-  "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
-    "husky": "^8.0.0"
+  "devDependencies": {},
+  "dependencies": {
+    "hooks": "^0.3.2"
   }
 }

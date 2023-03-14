@@ -20,3 +20,44 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Adds the commit-msg hook on ./gradlew build
+task installLocalGitHook(type: Copy){
+	from new File(rootProject.rootDir, 'scripts/commit-msg')
+	into { new File(rootProject.rootDir, '.git/hooks')}
+	fileMode 0775
+}
+
+build.dependsOn installLocalGitHook
+
+
+def executeGitLogCommand = { oldReleaseTag,newReleaseTag ->
+	def stdout = new ByteArrayOutputStream()
+	exec {
+		commandLine 'git', 'log', '--pretty=- %s', oldReleaseTag + '..'+newReleaseTag , '--no-merges'
+		standardOutput = stdout
+	}
+	return stdout.toString().trim()
+}
+
+
+// generates the changelog file based on release tags Eg:  ./gradlew -PoldReleaseTag=release-x.0.0-prod -PnewReleaseTag=release-x.0.1-prod generateChangeLogFile
+task generateChangeLogFile {
+	doLast({
+		println oldReleaseTag
+		println newReleaseTag
+		def f = new File('CHANGELOG.md')
+		def emptyContent = ""
+		def oldConTent = f.text ? f.text.split("(http://semver.org/)")[1] : ""
+		println "old Content ::" + oldConTent
+		def releaseName = newReleaseTag.split("-prod")[0]
+		def newContent = "All notable changes to this project will be documented in this file.\n" +
+				"This project adheres to [Semantic Versioning](http://semver.org/)\n\n" + "## " + releaseName + "\n" + executeGitLogCommand(oldReleaseTag, newReleaseTag)
+		//Empty file
+		new File('CHANGELOG.md').withWriter { writer ->
+			writer.write(emptyContent)
+		}
+		f.append(newContent + oldConTent)
+	})
+
+}
